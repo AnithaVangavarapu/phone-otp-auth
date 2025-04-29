@@ -27,6 +27,8 @@ export const useSignIn = () => {
   const contextData = useContext<UserContextProps>(UserContext);
   const { isAuthenticate, setIsAuthenticate } = contextData;
   const [sendingOtp, setSendingOtp] = useState<boolean>(false);
+
+  //Showing OTP expiry time
   useEffect(() => {
     if (timer > 0) {
       setResend(false);
@@ -39,6 +41,7 @@ export const useSignIn = () => {
     }
   }, [timer]);
 
+  //RecaptchaVerifier renders only on intial render
   useEffect(() => {
     if (!recaptchaVerifier.current) {
       recaptchaVerifier.current = new RecaptchaVerifier(
@@ -60,12 +63,14 @@ export const useSignIn = () => {
     };
   }, []);
 
+  //Prevents authenticate user navigates to login page
   useEffect(() => {
     if (isAuthenticate) {
       navigate("/home");
     }
   }, [isAuthenticate]);
 
+  //Sending request for otp
   const handlePhoneVerification = async () => {
     console.log("apicalling....");
     console.log(phoneNumber);
@@ -94,6 +99,7 @@ export const useSignIn = () => {
     setSendingOtp(false);
   };
 
+  //handles otp input values
   const handleInputValueChange = (value: string, index: number) => {
     console.log(value, index);
     const updatedOtp = [...otpValues];
@@ -103,11 +109,13 @@ export const useSignIn = () => {
     else setError(true);
   };
 
+  // jump to next input after filling current input in otp inputs
   const handleFocusOnNextInput = (index: number) => {
     const nextInput = document.getElementById(`otp_${index + 1}`);
     if (nextInput) nextInput.focus();
   };
 
+  //Confirming otp verification  by sending user enterd otp
   const handleVerifyOTP = async (
     e: React.MouseEvent<HTMLButtonElement | MouseEvent>
   ) => {
@@ -129,12 +137,14 @@ export const useSignIn = () => {
     }
   };
 
+  //Ensure Otp input values recieve digit and backspace
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!/[0-9]/.test(e.key) && e.key !== "Backspace") {
       e.preventDefault();
     }
   };
 
+  //goback functionality
   const handleCancel = () => {
     setConfirm(undefined);
     setPhoneNumber("");
@@ -142,6 +152,7 @@ export const useSignIn = () => {
     setTimer(0);
   };
 
+  //Resending otp to user
   const handleResend = () => {
     console.log("Resending otp...");
     handlePhoneVerification();
