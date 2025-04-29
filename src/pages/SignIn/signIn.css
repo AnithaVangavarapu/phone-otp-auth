@@ -1,0 +1,17 @@
+.react-tel-input {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+}
+.react-tel-input .form-control {
+  font-size: 12px;
+  padding-left: 5px;
+}
+.react-tel-input .flag-dropdown {
+  position: static !important;
+  margin-right: 5px;
+  border-radius: 5px;
+}
+.react-tel-input .country-list {
+  text-align: justify;
+}

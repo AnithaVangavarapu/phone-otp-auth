@@ -4,7 +4,8 @@ interface ButtonProps {
   label: string;
   type?: "submit" | "reset" | "button" | undefined;
   classname?: string;
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  disable?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -12,12 +13,14 @@ const Button: React.FC<ButtonProps> = ({
   type,
   classname,
   onClick,
+  disable,
 }: ButtonProps) => {
   return (
     <button
       type={type}
       className={twMerge(clsx("border rounded-md text-sm", classname))}
       onClick={onClick}
+      disabled={disable}
     >
       {label}
     </button>
