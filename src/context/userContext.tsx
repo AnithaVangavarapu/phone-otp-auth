@@ -14,6 +14,7 @@ const UserContext = createContext<UserContextProps>({
 export default UserContext;
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [isAuthenticate, setIsAuthenticate] = useState<boolean>(false);
+
   useEffect(() => {
     const authStatus = localStorage.getItem("isAuthenticated");
     if (authStatus) {
@@ -22,6 +23,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       setIsAuthenticate(false);
     }
   }, []);
+
   return (
     <UserContext value={{ isAuthenticate, setIsAuthenticate }}>
       {children}

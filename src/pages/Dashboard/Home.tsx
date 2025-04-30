@@ -2,10 +2,12 @@ import { useEffect, useContext } from "react";
 import UserContext, { UserContextProps } from "../../context/userContext";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../commonComponents";
+
 const Home = () => {
   const contextData = useContext<UserContextProps>(UserContext);
   const { isAuthenticate, setIsAuthenticate } = contextData;
   const navigate = useNavigate();
+
   useEffect(() => {
     if (isAuthenticate) {
       navigate("/");
@@ -13,6 +15,7 @@ const Home = () => {
       navigate("/signin");
     }
   }, [isAuthenticate]);
+
   return (
     <div className="flex justify-between mx-5 mt-2 border rounded-md p-2 items-center border-gray-200">
       <div className="text-blue-950 font-medium text-[20px]">Dashboard</div>

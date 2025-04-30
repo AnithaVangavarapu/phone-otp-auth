@@ -13,6 +13,7 @@ interface OTPScreenProps {
   setPhoneNumber: (val: string) => void;
   setShowCard: (val: "phoneNumber" | "otpVerification") => void;
 }
+
 const OTPScreen = ({
   otpLength,
   handlePhoneVerification,
@@ -47,6 +48,7 @@ const OTPScreen = ({
     setShowCard,
     phoneNumber,
   });
+
   return (
     <div className="text-center">
       <h1 className="text-[18px] pb-5 font-medium text-blue-950">
@@ -76,13 +78,12 @@ const OTPScreen = ({
             type="text"
             maxLength={1}
             onKeyDown={(e) => {
-              handleKeyDown(e);
+              handleKeyDown(e, index);
             }}
             id={`otp_${index}`}
           />
         ))}
       </div>
-
       {resend === false ? (
         <div className="mt-2 text-[12px]">{timer}</div>
       ) : (
@@ -98,7 +99,6 @@ const OTPScreen = ({
           <ChevronRight width={15} />
         </div>
       )}
-
       <Button
         type="submit"
         label="Verify"
@@ -107,7 +107,6 @@ const OTPScreen = ({
           error ? "cursor-not-allowed" : "cursor-pointer"
         } w-[100%] h-[35px] mt-8 p-1 text-[14px] font-medium bg-blue-950 text-white border-blue-950`}
       />
-
       <div
         className="flex justify-center items-center text-blue-950 mt-5"
         onClick={handleCancel}

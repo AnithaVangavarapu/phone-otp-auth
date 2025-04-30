@@ -4,6 +4,7 @@ import "react-phone-input-2/lib/style.css";
 import { Button } from "../../commonComponents";
 import "./signIn.css";
 import { OTPScreen } from "../../components/OTPScreen";
+
 const SignIn = () => {
   const {
     handlePhoneVerification,

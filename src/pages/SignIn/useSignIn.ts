@@ -14,16 +14,14 @@ export const useSignIn = () => {
   const [showCard, setShowCard] = useState<"phoneNumber" | "otpVerification">(
     "phoneNumber"
   );
-  const otpLength = 6;
-
   const [confirm, setConfirm] = useState<ConfirmationResult | undefined>();
-
   const [timer, setTimer] = useState<number>(60);
-  const navigate = useNavigate();
   const recaptchaVerifier = useRef<RecaptchaVerifier | null>(null);
   const contextData = useContext<UserContextProps>(UserContext);
   const { isAuthenticate } = contextData;
   const [sendingOtp, setSendingOtp] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const otpLength = 6;
 
   //RecaptchaVerifier renders only on intial render
   useEffect(() => {
@@ -33,8 +31,6 @@ export const useSignIn = () => {
         "recaptcha-container",
         { size: "invisible" }
       );
-
-      console.log("recaptchaVerification: ", recaptchaVerifier.current);
       recaptchaVerifier.current
         .render()
         .catch((error) => console.log("Recaptcha render Error: ", error));
@@ -56,16 +52,12 @@ export const useSignIn = () => {
 
   //Sending request for otp
   const handlePhoneVerification = async () => {
-    console.log("apicalling....");
-    console.log(phoneNumber);
     if (phoneNumber === undefined) return;
     setSendingOtp(true);
     const number = "+" + phoneNumber;
-    console.log("number:", number);
-
     try {
+      //checks whether recaaptch verifier initialized or not
       if (!recaptchaVerifier.current) {
-        console.log("Recaptcha verifier not initialzed");
         return;
       }
       const response = await signInWithPhoneNumber(
@@ -73,7 +65,6 @@ export const useSignIn = () => {
         number,
         recaptchaVerifier.current
       );
-      console.log("otp sent", response);
       setConfirm(response);
       setShowCard("otpVerification");
       setTimer(60);
@@ -92,10 +83,8 @@ export const useSignIn = () => {
     otpLength,
     confirm,
     setConfirm,
-
     timer,
     setTimer,
-
     sendingOtp,
   };
 };
