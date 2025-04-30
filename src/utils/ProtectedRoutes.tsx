@@ -5,7 +5,7 @@ const ProtectedRoutes = () => {
   const contextData = useContext<UserContextProps>(UserContext);
   const { isAuthenticate } = contextData;
 
-  return isAuthenticate ? <Outlet /> : <Navigate to={"/"} />;
+  return isAuthenticate ? <Outlet /> : <Navigate to={"/signin"} />;
 };
 
 export default ProtectedRoutes;

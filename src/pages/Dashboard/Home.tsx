@@ -8,14 +8,14 @@ const Home = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (isAuthenticate) {
-      navigate("/home");
-    } else {
       navigate("/");
+    } else {
+      navigate("/signin");
     }
   }, [isAuthenticate]);
   return (
-    <div className="flex justify-between m-10">
-      <div>Dashboard</div>
+    <div className="flex justify-between mx-5 mt-2 border rounded-md p-2 items-center border-gray-200">
+      <div className="text-blue-950 font-medium text-[20px]">Dashboard</div>
       <Button
         label="Logout"
         type="button"

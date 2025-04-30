@@ -1,5 +1,5 @@
 import { ArrowLeft, ChevronRight } from "lucide-react";
-import { Button } from "../commonComponents";
+import { Button } from "../../commonComponents";
 import { ConfirmationResult } from "firebase/auth";
 import { useOTPScreen } from "./useOTPScreen";
 interface OTPScreenProps {
@@ -35,6 +35,7 @@ const OTPScreen = ({
     otpValues,
     validOtpError,
     resend,
+    number,
   } = useOTPScreen({
     handlePhoneVerification,
     otpLength,
@@ -44,15 +45,16 @@ const OTPScreen = ({
     setConfirm,
     setPhoneNumber,
     setShowCard,
+    phoneNumber,
   });
   return (
     <div className="text-center">
       <h1 className="text-[18px] pb-5 font-medium text-blue-950">
         Verification Code
       </h1>
-      <p className="text-[12px] pb-5 font-light">
+      <p className="text-[12px] pb-5 font-light flex flex-col">
         Please enter code sent to{" "}
-        <span className="text-blue-950 font-medium">{phoneNumber}</span>
+        <span className="text-blue-950 font-medium">{`+${number}`}</span>
       </p>
       {validOtpError && (
         <div className="text-[12px] text-red-500 font-medium pb-5">

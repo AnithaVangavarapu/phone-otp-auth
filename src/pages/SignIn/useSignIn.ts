@@ -50,7 +50,7 @@ export const useSignIn = () => {
   //Prevents authenticate user navigates to login page
   useEffect(() => {
     if (isAuthenticate) {
-      navigate("/home");
+      navigate("/");
     }
   }, [isAuthenticate]);
 

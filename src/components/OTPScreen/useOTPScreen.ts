@@ -1,7 +1,8 @@
 import { useState, useEffect, useContext } from "react";
-import UserContext, { UserContextProps } from "../context/userContext";
+import UserContext, { UserContextProps } from "../../context/userContext";
 import { useNavigate } from "react-router-dom";
 import { ConfirmationResult } from "firebase/auth";
+
 interface useOTPScreenProps {
   otpLength: number;
   handlePhoneVerification: () => void;
@@ -11,6 +12,7 @@ interface useOTPScreenProps {
   setConfirm: (val: ConfirmationResult | undefined) => void;
   setPhoneNumber: (val: string) => void;
   setShowCard: (val: "phoneNumber" | "otpVerification") => void;
+  phoneNumber: string | undefined;
 }
 export const useOTPScreen = ({
   handlePhoneVerification,
@@ -21,6 +23,7 @@ export const useOTPScreen = ({
   setConfirm,
   setPhoneNumber,
   setShowCard,
+  phoneNumber,
 }: useOTPScreenProps) => {
   const contextData = useContext<UserContextProps>(UserContext);
   const { setIsAuthenticate } = contextData;
@@ -31,6 +34,14 @@ export const useOTPScreen = ({
   const [error, setError] = useState<boolean>(true);
   const [resend, setResend] = useState<boolean>(false);
   const navigate = useNavigate();
+  const [number, setNumber] = useState<string>("");
+  useEffect(() => {
+    if (phoneNumber !== undefined) {
+      const num = phoneNumber.slice(0, 2) + " " + phoneNumber.slice(2);
+      setNumber(num);
+    }
+  }, [phoneNumber]);
+
   //Showing OTP expiry time
   useEffect(() => {
     if (timer > 0) {
@@ -73,7 +84,7 @@ export const useOTPScreen = ({
       setVAlidOtpError(false);
       localStorage.setItem("isAuthenticated", "true");
       setIsAuthenticate(true);
-      navigate("/home");
+      navigate("/");
       setTimer(0);
     } catch (error) {
       setVAlidOtpError(true);
@@ -116,5 +127,6 @@ export const useOTPScreen = ({
     validOtpError,
     error,
     resend,
+    number,
   };
 };
